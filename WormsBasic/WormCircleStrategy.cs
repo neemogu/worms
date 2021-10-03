@@ -5,15 +5,19 @@
         private readonly int _leftX;
         private readonly int _rightX;
         private Direction _currentDirection = Direction.Left;
-        
-        public WormCircleStrategy(int circleRadius, int centerX, int centerY) {
-            _upY = centerY + circleRadius;
-            _downY = centerY - circleRadius;
-            _leftX = centerX - circleRadius;
-            _rightX = centerX + circleRadius;
+        private readonly Worm _worm;
+
+        public WormCircleStrategy(int circleRadius, Point centerPoint, Worm worm) {
+            _upY = centerPoint.Y + circleRadius;
+            _downY = centerPoint.Y - circleRadius;
+            _leftX = centerPoint.X - circleRadius;
+            _rightX = centerPoint.X + circleRadius;
+            _worm = worm;
         }
         
-        public Direction NextDirection(int x, int y) {
+        public Direction NextDirection() {
+            var x = _worm.Location.X;
+            var y = _worm.Location.Y;
             if (x < _leftX) {
                 _currentDirection = Direction.Right;
             } else if (x > _rightX) {

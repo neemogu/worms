@@ -1,6 +1,7 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsBasic", "WormsBasic\WormsBasic.csproj", "{C46BF666-4350-41D7-AA0F-901245C3C0F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsAdvanced", "WormsAdvanced\WormsAdvanced.csproj", "{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +13,9 @@ Global
 		{C46BF666-4350-41D7-AA0F-901245C3C0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C46BF666-4350-41D7-AA0F-901245C3C0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C46BF666-4350-41D7-AA0F-901245C3C0F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

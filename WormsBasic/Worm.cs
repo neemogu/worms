@@ -3,54 +3,57 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace WormsBasic {
-    public class Worm {
-        public Worm(string name, int startX, int startY,
-            IWormStrategy strategy) {
+    public abstract class Worm {
+        protected Worm(string name, Point startPoint) {
             Name = name;
-            X = startX;
-            Y = startY;
-            WormStrategy = strategy;
-            _nextDirection = strategy.NextDirection(X, Y);
-            NextAction = strategy.NextAction();
+            Location = startPoint;
+            Strategy = new IdleStrategy();
         }
-
-        private Direction _nextDirection;
+        
         public WormAction NextAction { get; private set; }
+        private Direction NextDirection { get; set; }
         public string Name { get; }
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public IWormStrategy WormStrategy { get; set; }
+        public Point Location { get; protected set; }
 
-        public int NextX() {
-            return _nextDirection switch {
-                Direction.Left => X - 1,
-                Direction.Right => X + 1,
-                _ => X
-            };
-        }
-
-        public int NextY() {
-            return _nextDirection switch {
-                Direction.Down => Y - 1,
-                Direction.Up => Y + 1,
-                _ => Y
-            };
-        }
-
-        public void Action() {
-            switch (NextAction) {
-                case WormAction.Move:
-                    X = NextX();
-                    Y = NextY();
-                    break;
+        private IWormStrategy _strategy;
+        public IWormStrategy Strategy {
+            get => _strategy;
+            set {
+                _strategy = value;
+                PrepareForNextAction();
             }
-            _nextDirection = WormStrategy.NextDirection(X, Y);
-            NextAction = WormStrategy.NextAction();
+        }
+        
+        private int NextX() {
+            return NextDirection switch {
+                Direction.Left => Location.X - 1,
+                Direction.Right => Location.X + 1,
+                _ => Location.X
+            };
         }
 
-        public override string ToString() {
-            return $"{Name} ({X}, {Y})";
+        private int NextY() {
+            return NextDirection switch {
+                Direction.Down => Location.Y - 1,
+                Direction.Up => Location.Y + 1,
+                _ => Location.Y
+            };
         }
+
+        public Point NextCoord() {
+            return new Point { X = NextX(), Y = NextY() };
+        }
+        
+        public override string ToString() {
+            return $"{Name}: {Location}";
+        }
+
+        protected void PrepareForNextAction() {
+            NextDirection = Strategy.NextDirection();
+            NextAction = Strategy.NextAction();
+        }
+
+        public abstract void Action();
         
         public static string WormsArrayToString(List<Worm> worms) {
             var builder = new StringBuilder();

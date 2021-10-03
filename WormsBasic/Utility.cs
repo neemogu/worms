@@ -6,6 +6,4 @@ namespace WormsBasic {
             return Math.Max(Math.Max(v1, v2), Math.Max(v3, v4));
         }
     }
-    
-    
 }

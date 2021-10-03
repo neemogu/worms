@@ -13,17 +13,22 @@ namespace WormsBasic {
 
         public void StartLife() {
             while (true) {
+                if (!Thread.CurrentThread.IsAlive) {
+                    break;
+                }
                 PrintWorms();
                 foreach (var worm in _worms) {
-                    var nextX = worm.NextX();
-                    var nextY = worm.NextY();
-                    if (_worms.All(worm1 => worm1 == worm ||
-                                            nextX != worm1.X ||
-                                            nextY != worm1.Y)) {
+                    var nextCoord = worm.NextCoord();
+                    if (_worms.All(worm1 => worm1 == worm || !nextCoord.Equals(worm1.Location))) {
                         worm.Action();
                     }
                 }
-                Thread.Sleep(1000);
+                try {
+                    Thread.Sleep(1000);
+                } catch (ThreadInterruptedException e) {
+                    Console.Out.WriteLine(e.Message);
+                    Thread.CurrentThread.Interrupt();
+                }
             }
         }
 
