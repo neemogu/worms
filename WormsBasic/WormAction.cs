@@ -1,5 +1,5 @@
 ﻿namespace WormsBasic {
     public enum WormAction {
-        Move, Idle
+        Move, Idle, Multiply
     }
 }

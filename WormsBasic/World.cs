@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -18,18 +19,24 @@ namespace WormsBasic {
 
         public void StartLife() {
             for (var i = 0; i < _turnsNumber; ++i) {
-                PrintWorms();
-                foreach (var worm in _worms) {
-                    var nextCoord = worm.NextCoord();
-                    if (_worms.All(worm1 => worm1 == worm || !nextCoord.Equals(worm1.Location))) {
-                        worm.Action();
-                    }
-                }
+                PrintWorms(i + 1);
+                ProcessWorms();
             }
         }
 
-        private void PrintWorms() {
-            Console.Out.WriteLine($"Worms: {Worm.WormsArrayToString(_worms)}");
+        private void ProcessWorms() {
+            foreach (var worm in _worms) {
+                var nextCoord = worm.NextCoord();
+                if (_worms.All(worm1 => worm1 == worm || !nextCoord.Equals(worm1.Location))) {
+                    worm.Action();
+                }
+            }
+        }
+        
+        private void PrintWorms(int turn) {
+            var text = $"Turn {turn}:\r\n{Worm.WormsArrayToString(_worms)}";
+            Console.Out.WriteLine(text);
+            File.WriteAllText("WorldHistory.txt", text);
         }
     }
 }

@@ -53,13 +53,13 @@ namespace WormsBasic {
             NextAction = Strategy.NextAction();
         }
 
-        public abstract void Action();
+        public abstract Worm Action();
         
-        public static string WormsArrayToString(List<Worm> worms) {
+        public static string WormsArrayToString<T>(List<T> worms) where T: Worm {
             var builder = new StringBuilder();
-            builder.Append('[');
-            worms.ForEach((w) => { builder.Append(w + ", "); });
-            builder.Remove(builder.Length - 2, 2);
+            builder.Append("[\r\n");
+            worms.ForEach((w) => { builder.Append("\t" + w + ",\r\n"); });
+            builder.Remove(builder.Length - 3, 1);
             builder.Append(']');
             return builder.ToString();
         }

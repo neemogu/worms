@@ -1,9 +1,7 @@
-﻿namespace WormsBasic {
+﻿using System;
+
+namespace WormsBasic {
     public readonly struct Point {
-        public Point(int x, int y) {
-            X = x;
-            Y = y;
-        }
         public int X { get; init; }
         public int Y { get; init; }
 
@@ -20,6 +18,20 @@
 
         public override int GetHashCode() {
             return (X << 2) ^ Y;
+        }
+
+        public int DistanceTo(Point p) {
+            return Math.Abs(p.X - X) + Math.Abs(p.Y - Y);
+        }
+
+        public static bool operator ==(Point left, Point right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Point left, Point right)
+        {
+            return !(left == right);
         }
     }
 }

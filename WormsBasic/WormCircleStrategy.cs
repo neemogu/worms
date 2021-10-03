@@ -1,57 +1,57 @@
 ﻿namespace WormsBasic {
     public class WormCircleStrategy: IWormStrategy {
-        private readonly int _upY;
-        private readonly int _downY;
-        private readonly int _leftX;
-        private readonly int _rightX;
-        private Direction _currentDirection = Direction.Left;
-        private readonly Worm _worm;
+        private int UpY { get; }
+        private int DownY { get; }
+        private int LeftX { get; }
+        private int RightX { get; }
+        private Direction CurrentDirection { get; set; } = Direction.Left;
+        private Worm Worm { get; }
 
         public WormCircleStrategy(int circleRadius, Point centerPoint, Worm worm) {
-            _upY = centerPoint.Y + circleRadius;
-            _downY = centerPoint.Y - circleRadius;
-            _leftX = centerPoint.X - circleRadius;
-            _rightX = centerPoint.X + circleRadius;
-            _worm = worm;
+            UpY = centerPoint.Y + circleRadius;
+            DownY = centerPoint.Y - circleRadius;
+            LeftX = centerPoint.X - circleRadius;
+            RightX = centerPoint.X + circleRadius;
+            Worm = worm;
         }
         
         public Direction NextDirection() {
-            var x = _worm.Location.X;
-            var y = _worm.Location.Y;
-            if (x < _leftX) {
-                _currentDirection = Direction.Right;
-            } else if (x > _rightX) {
-                _currentDirection = Direction.Left;
-            } else if (x == _leftX) {
-                if (y < _upY) {
-                    _currentDirection = Direction.Up;
-                } else if (y == _upY) {
-                    _currentDirection = Direction.Right;
+            var x = Worm.Location.X;
+            var y = Worm.Location.Y;
+            if (x < LeftX) {
+                CurrentDirection = Direction.Right;
+            } else if (x > RightX) {
+                CurrentDirection = Direction.Left;
+            } else if (x == LeftX) {
+                if (y < UpY) {
+                    CurrentDirection = Direction.Up;
+                } else if (y == UpY) {
+                    CurrentDirection = Direction.Right;
                 } else {
-                    _currentDirection = Direction.Down;
+                    CurrentDirection = Direction.Down;
                 }
-            } else if (x == _rightX) {
-                if (y > _downY) {
-                    _currentDirection = Direction.Down;
-                } else if (y == _downY) {
-                    _currentDirection = Direction.Left;
+            } else if (x == RightX) {
+                if (y > DownY) {
+                    CurrentDirection = Direction.Down;
+                } else if (y == DownY) {
+                    CurrentDirection = Direction.Left;
                 } else {
-                    _currentDirection = Direction.Up;
+                    CurrentDirection = Direction.Up;
                 }
             } else {
-                if (y > _upY) {
-                    _currentDirection = Direction.Down;
-                } else if (y == _upY) {
-                    _currentDirection = Direction.Right;
-                } else if (y < _downY) {
-                    _currentDirection = Direction.Up;
-                } else if (y == _downY) {
-                    _currentDirection = Direction.Left;
+                if (y > UpY) {
+                    CurrentDirection = Direction.Down;
+                } else if (y == UpY) {
+                    CurrentDirection = Direction.Right;
+                } else if (y < DownY) {
+                    CurrentDirection = Direction.Up;
+                } else if (y == DownY) {
+                    CurrentDirection = Direction.Left;
                 } else {
-                    _currentDirection = Direction.Left;
+                    CurrentDirection = Direction.Left;
                 }
             }
-            return _currentDirection;
+            return CurrentDirection;
         }
 
         public WormAction NextAction() {
