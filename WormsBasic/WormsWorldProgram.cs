@@ -9,7 +9,7 @@
             var bob = new BasicWorm("Bob", new Point(-1, 0));
             IWormStrategy bobStrategy = new WormCircleStrategy(5, new Point(0, 0), bob);
             bob.Strategy = bobStrategy;
-            var world = new World();
+            var world = new World(100);
             world.AddWorm(john);
             world.AddWorm(bob);
             world.StartLife();
