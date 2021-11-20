@@ -3,6 +3,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsBasic", "WormsBasic\Wo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsAdvanced", "WormsAdvanced\WormsAdvanced.csproj", "{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsDIContainers", "WormsDIContainers\WormsDIContainers.csproj", "{15D70444-794A-4203-9661-5CB77E2343A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,5 +19,9 @@ Global
 		{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DAED216-53A3-465B-AFFE-3AB6C716B7CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15D70444-794A-4203-9661-5CB77E2343A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D70444-794A-4203-9661-5CB77E2343A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D70444-794A-4203-9661-5CB77E2343A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D70444-794A-4203-9661-5CB77E2343A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

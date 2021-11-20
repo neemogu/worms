@@ -1,32 +1,42 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using WormsBasic;
 
 namespace WormsAdvanced {
-    public class World: IFoodContainer {
+    public class AdvancedWorld: IFoodContainer, IWorld {
         private const string LogFileName = "WorldHistory.txt";
         
         private readonly int _turnsNumber;
         private readonly Random _random;
-        public World(int turnsNumber) {
+        private IWormStrategy _strategy;
+        
+        public AdvancedWorld(int turnsNumber, IWormStrategy strategy) {
+            ClearLogFile();
             _turnsNumber = turnsNumber;
             _random = new Random();
+            _strategy = strategy;
+        }
+        
+        public AdvancedWorld(int turnsNumber) {
+            ClearLogFile();
+            _turnsNumber = turnsNumber;
+            _random = new Random();
+            _strategy = new IdleStrategy();
         }
         
         private readonly List<AdvancedWorm> _worms = new();
         private readonly IDictionary<Point, Food> _food = new Dictionary<Point, Food>();
 
-        public void AddWorm(AdvancedWorm worm) {
-            _worms.Add(worm);
+        public void AddWorm(Worm worm) {
+            if (worm is AdvancedWorm advancedWorm) {
+                _worms.Add(advancedWorm);
+            }
         }
 
         public void StartLife() {
-            File.Delete(LogFileName);
             for (var i = 0; i < _turnsNumber; ++i) {
                 ClearRottenFood();
                 SpawnFood();
@@ -34,6 +44,8 @@ namespace WormsAdvanced {
                 ProcessWorms();
             }
         }
+
+        public void SetStrategy(IWormStrategy strategy) => _strategy = strategy;
 
         private void ClearRottenFood() {
             var rottenFoodLocations = new List<Point>();
@@ -78,20 +90,29 @@ namespace WormsAdvanced {
                     continue;
                 }
                 CheckForFoodAndEat(worm);
-                var nextCoord = worm.NextCoord();
+                
+                var nextDirection = _strategy.NextDirection(worm);
+                var nextCoord = worm.GetNextLocation(nextDirection);
                 // if there are no worms in the next coord
                 if (_worms.All(worm1 => worm1 == worm || !nextCoord.Equals(worm1.Location))) {
                     // is there is a food in the next coord
                     switch (_food.ContainsKey(nextCoord)) {
                         case false: {
-                            var newWorm = worm.Action();
-                            if (newWorm != null) {
-                                AddWorm(newWorm);
+                            switch (_strategy.NextAction(worm)) {
+                                case WormAction.Move:
+                                    worm.Move(nextDirection);
+                                    break;
+                                case WormAction.Multiply:
+                                    var newWorm = worm.TryMultiply(nextCoord);
+                                    if (newWorm != null) {
+                                        AddWorm(newWorm);
+                                    }
+                                    break;
                             }
                             break;
                         }
-                        case true when worm.NextAction == WormAction.Move:
-                            CheckForFoodAndEat(worm, worm.NextCoord());
+                        case true when _strategy.NextAction(worm) == WormAction.Move:
+                            CheckForFoodAndEat(worm, nextCoord);
                             break;
                     }
                 }
@@ -102,7 +123,11 @@ namespace WormsAdvanced {
         private void PrintWorms(int turn) {
             var text = $"Turn {turn}:\r\nWorms:\r\n{Worm.WormsArrayToString(_worms)}\r\nFood:\r\n{FoodToString()}\r\n";
             Console.Out.Write(text);
-            File.AppendAllText(LogFileName, text);
+            try {
+                File.AppendAllText(LogFileName, text);
+            } catch (Exception e) {
+                Console.Error.WriteLine("Can't log turn " + turn + " to a file " + LogFileName + ": " + e.Message);
+            }
         }
 
         private string FoodToString() {
@@ -116,7 +141,7 @@ namespace WormsAdvanced {
             return builder.ToString();
         }
 
-        public Point getNearestFood(Point fromCoord) {
+        public Point GetNearestFood(Point fromCoord) {
             var nearest = new Point { X = int.MaxValue, Y = int.MaxValue};  
             var lowestDistance = int.MaxValue;
             foreach (var (foodLocation, food) in _food) {
@@ -126,6 +151,14 @@ namespace WormsAdvanced {
                 nearest = foodLocation;
             }
             return nearest;
+        }
+        
+        private void ClearLogFile() {
+            try {
+                File.Delete(LogFileName);
+            } catch (Exception e) {
+                Console.Error.WriteLine("Can't clear log file " + LogFileName);
+            }
         }
     }
 }

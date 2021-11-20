@@ -4,57 +4,58 @@
         private int DownY { get; }
         private int LeftX { get; }
         private int RightX { get; }
-        private Direction CurrentDirection { get; set; } = Direction.Left;
-        private Worm Worm { get; }
 
-        public WormCircleStrategy(int circleRadius, Point centerPoint, Worm worm) {
+        public WormCircleStrategy(int circleRadius, Point centerPoint) {
             UpY = centerPoint.Y + circleRadius;
             DownY = centerPoint.Y - circleRadius;
             LeftX = centerPoint.X - circleRadius;
             RightX = centerPoint.X + circleRadius;
-            Worm = worm;
         }
         
-        public Direction NextDirection() {
-            var x = Worm.Location.X;
-            var y = Worm.Location.Y;
+        public Direction NextDirection(Worm worm) {
+            var x = worm.Location.X;
+            var y = worm.Location.Y;
             if (x < LeftX) {
-                CurrentDirection = Direction.Right;
-            } else if (x > RightX) {
-                CurrentDirection = Direction.Left;
-            } else if (x == LeftX) {
+                return Direction.Right;
+            } 
+            if (x > RightX) {
+                return Direction.Left;
+            } 
+            if (x == LeftX) {
                 if (y < UpY) {
-                    CurrentDirection = Direction.Up;
-                } else if (y == UpY) {
-                    CurrentDirection = Direction.Right;
-                } else {
-                    CurrentDirection = Direction.Down;
+                    return Direction.Up;
+                } 
+                if (y < UpY) {
+                    return Direction.Down;
                 }
-            } else if (x == RightX) {
-                if (y > DownY) {
-                    CurrentDirection = Direction.Down;
-                } else if (y == DownY) {
-                    CurrentDirection = Direction.Left;
-                } else {
-                    CurrentDirection = Direction.Up;
-                }
-            } else {
-                if (y > UpY) {
-                    CurrentDirection = Direction.Down;
-                } else if (y == UpY) {
-                    CurrentDirection = Direction.Right;
-                } else if (y < DownY) {
-                    CurrentDirection = Direction.Up;
-                } else if (y == DownY) {
-                    CurrentDirection = Direction.Left;
-                } else {
-                    CurrentDirection = Direction.Left;
-                }
+                return Direction.Right;
             }
-            return CurrentDirection;
+            if (x == RightX) {
+                if (y > DownY) {
+                    return Direction.Down;
+                }
+                if (y < DownY) {
+                    return Direction.Up;
+                }
+                return Direction.Left;
+            }
+            
+            if (y > UpY) {
+                return Direction.Down;
+            } 
+            if (y == UpY) {
+                return Direction.Right;
+            }
+            if (y < DownY) {
+                return Direction.Up;
+            }
+            if (y == DownY) {
+                return Direction.Left;
+            }
+            return Direction.Left;
         }
 
-        public WormAction NextAction() {
+        public WormAction NextAction(Worm worm) {
             return WormAction.Move;
         }
     }

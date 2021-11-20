@@ -2,6 +2,6 @@
 
 namespace WormsAdvanced {
     public interface IFoodContainer {
-        Point getNearestFood(Point fromCoord);
+        Point GetNearestFood(Point fromCoord);
     }
 }

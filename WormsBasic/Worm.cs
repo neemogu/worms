@@ -7,53 +7,41 @@ namespace WormsBasic {
         protected Worm(string name, Point startPoint) {
             Name = name;
             Location = startPoint;
-            Strategy = new IdleStrategy();
         }
         
-        public WormAction NextAction { get; private set; }
-        private Direction NextDirection { get; set; }
         public string Name { get; }
         public Point Location { get; protected set; }
 
-        private IWormStrategy _strategy;
-        public IWormStrategy Strategy {
-            get => _strategy;
-            set {
-                _strategy = value;
-                PrepareForNextAction();
-            }
-        }
-        
-        private int NextX() {
-            return NextDirection switch {
-                Direction.Left => Location.X - 1,
-                Direction.Right => Location.X + 1,
-                _ => Location.X
-            };
-        }
-
-        private int NextY() {
-            return NextDirection switch {
-                Direction.Down => Location.Y - 1,
-                Direction.Up => Location.Y + 1,
-                _ => Location.Y
-            };
-        }
-
-        public Point NextCoord() {
-            return new Point { X = NextX(), Y = NextY() };
-        }
-        
         public override string ToString() {
             return $"{Name}: {Location}";
         }
 
-        protected void PrepareForNextAction() {
-            NextDirection = Strategy.NextDirection();
-            NextAction = Strategy.NextAction();
+        public void Move(Direction direction) {
+            Location = GetNextLocation(direction);
         }
 
-        public abstract Worm Action();
+        public Point GetNextLocation(Direction direction) {
+            var newX = Location.X;
+            var newY = Location.Y;
+            switch (direction) {
+                case Direction.Up:
+                    ++newY;
+                    break;
+                case Direction.Down:
+                    --newY;
+                    break;
+                case Direction.Left:
+                    --newX;
+                    break;
+                case Direction.Right:
+                    ++newX;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+            
+            return new Point { X = newX, Y = newY};
+        }
         
         public static string WormsArrayToString<T>(List<T> worms) where T: Worm {
             var builder = new StringBuilder();

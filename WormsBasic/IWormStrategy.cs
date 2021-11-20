@@ -1,6 +1,6 @@
 ﻿namespace WormsBasic {
     public interface IWormStrategy {
-        Direction NextDirection();
-        WormAction NextAction();
+        Direction NextDirection(Worm worm);
+        WormAction NextAction(Worm worm);
     }
 }

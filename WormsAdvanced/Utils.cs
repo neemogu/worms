@@ -9,9 +9,5 @@ namespace WormsAdvanced {
             var randNormal = mu + sigma * randStdNormal;
             return (int)Math.Round(randNormal);
         }
-
-        public static string NextName() {
-            return Guid.NewGuid().ToString();
-        }
     }
 }
