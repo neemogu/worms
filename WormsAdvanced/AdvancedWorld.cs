@@ -4,25 +4,24 @@ using WormsBasic;
 
 namespace WormsAdvanced {
     public class AdvancedWorld: IWorld {
-        private readonly int _turnsNumber;
+        private readonly int _turnsNumber = 100;
         private IWormStrategy _strategy;
         private readonly NameGenerator _nameGenerator;
         private readonly FoodContainer _foodContainer;
         private readonly Logger _logger;
 
-        public AdvancedWorld(int turnsNumber, IWormStrategy strategy, NameGenerator nameGenerator,
+        public AdvancedWorld(IWormStrategy strategy, NameGenerator nameGenerator,
             FoodContainer foodContainer, Logger logger) {
-            _turnsNumber = turnsNumber;
             _strategy = strategy;
             _nameGenerator = nameGenerator;
             _foodContainer = foodContainer;
             _logger = logger;
         }
         
-        public AdvancedWorld(int turnsNumber, IWormStrategy strategy, FoodContainer foodContainer): this(turnsNumber, strategy,
+        public AdvancedWorld(IWormStrategy strategy, FoodContainer foodContainer): this(strategy,
             new NameGenerator(), foodContainer, new Logger()) {}
         
-        public AdvancedWorld(int turnsNumber) : this(turnsNumber, new IdleStrategy(), new FoodContainer(new FoodGenerator(0, 5))) {}
+        public AdvancedWorld() : this(new IdleStrategy(), new FoodContainer(new FoodGenerator(0, 5))) {}
         
         private readonly List<AdvancedWorm> _worms = new();
         private readonly ISet<string> _wormsNames = new HashSet<string>();
