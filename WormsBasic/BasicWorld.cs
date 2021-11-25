@@ -19,8 +19,6 @@ namespace WormsBasic {
 
         public void AddWorm(Worm worm) => _worms.Add(worm);
 
-        public void SetStrategy(IWormStrategy wormStrategy) => _wormStrategy = wormStrategy;
-
         public void StartLife() {
             for (var i = 0; i < _turnsNumber; ++i) {
                 PrintWorms(i + 1);
@@ -41,9 +39,7 @@ namespace WormsBasic {
                 }
             }
         }
-        
-        
-        
+
         private void PrintWorms(int turn) {
             var text = $"Turn {turn}:\r\n{Worm.WormsArrayToString(_worms)}";
             Console.Out.WriteLine(text);

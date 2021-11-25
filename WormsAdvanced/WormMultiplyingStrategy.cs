@@ -3,17 +3,18 @@ using WormsBasic;
 
 namespace WormsAdvanced {
     public class WormMultiplyingStrategy: IWormStrategy {
+
         private readonly Random _random = new ();
+
+        private readonly FoodContainer _foodContainer;
         
-        public WormMultiplyingStrategy(IFoodContainer foodContainer) {
-            FoodContainer = foodContainer;
+        public WormMultiplyingStrategy(FoodContainer foodContainer) {
+            _foodContainer = foodContainer;
         }
 
-        private IFoodContainer FoodContainer { get; }
-
         public Direction NextDirection(Worm worm) {
-            var nearestFood = FoodContainer.GetNearestFood(worm.Location);
-
+            var nearestFood = _foodContainer.GetNearestFood(worm.Location);
+            
             var result = Direction.Up;
             
             if (nearestFood.X > worm.Location.X) {
