@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using WormsBasic;
 
 namespace WormsAdvanced {
@@ -6,14 +8,15 @@ namespace WormsAdvanced {
 
         private readonly Random _random = new ();
 
-        private readonly FoodContainer _foodContainer;
+        private readonly IFoodLocationProvider _foodLocationProvider;
         
-        public WormMultiplyingStrategy(FoodContainer foodContainer) {
-            _foodContainer = foodContainer;
+        public WormMultiplyingStrategy(IFoodLocationProvider foodLocationProvider) {
+            _foodLocationProvider = foodLocationProvider;
         }
 
-        public Direction NextDirection(Worm worm) {
-            var nearestFood = _foodContainer.GetNearestFood(worm.Location);
+        //TODO: rework strategy
+        public Direction NextDirection <TWorm> (TWorm worm, List<TWorm> allWorms) where TWorm : Worm {
+            var nearestFood = _foodLocationProvider.GetNearestFood(worm.Location);
             
             var result = Direction.Up;
             
@@ -37,6 +40,12 @@ namespace WormsAdvanced {
                 return NextAction(worm) != WormAction.Multiply ? Direction.Down : Direction.Up;
             }
             return result;
+        }
+
+        private bool IsDirectionAllowed <TWorm> (Direction direction, TWorm worm, IEnumerable<TWorm> allWorms)
+            where TWorm : Worm {
+            var nextWormLocation = Utility.GetNextLocation(direction, worm.Location);
+            return allWorms.All(w => worm == w || !nextWormLocation.Equals(w.Location));
         }
 
         public WormAction NextAction(Worm worm) {

@@ -3,7 +3,7 @@ using System.Text;
 using WormsBasic;
 
 namespace WormsAdvanced {
-    public class FoodContainer {
+    public class FoodContainer : IFoodLocationProvider, IFoodContainer {
 
         private readonly FoodGenerator _foodGenerator;
         
@@ -46,13 +46,13 @@ namespace WormsAdvanced {
             SpawnFood();
         }
         
-        public void CheckForFoodAndEat(AdvancedWorm worm) {
+        public void CheckForFoodAndEat (AdvancedWorm worm) {
             if (_food.Remove(worm.Location)) {
                 worm.Eat();
             }
         }
         
-        public void CheckForFoodAndEat(AdvancedWorm worm, Point coordToCheck) {
+        public void CheckForFoodAndEat (AdvancedWorm worm, Point coordToCheck) {
             if (_food.Remove(coordToCheck)) {
                 worm.Eat();
             }

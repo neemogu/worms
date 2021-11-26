@@ -1,6 +1,8 @@
-﻿namespace WormsBasic {
+﻿using System.Collections.Generic;
+
+namespace WormsBasic {
     public class IdleStrategy: IWormStrategy {
-        public Direction NextDirection(Worm worm) {
+        public Direction NextDirection<TWorm>(TWorm worm, List<TWorm> allWorms) where TWorm : Worm {
             return Direction.Up;
         }
 

@@ -7,7 +7,7 @@ namespace WormsBasic {
     public class BasicWorld: IWorld {
         private readonly int _turnsNumber;
         private const string LogFileName = "WorldHistory.txt";
-        private IWormStrategy _wormStrategy;
+        private readonly IWormStrategy _wormStrategy;
         
         public BasicWorld(int turnsNumber, IWormStrategy wormStrategy) {
             ClearLogFile();
@@ -30,8 +30,8 @@ namespace WormsBasic {
             foreach (var worm in _worms) {
                 switch (_wormStrategy.NextAction(worm)) {
                     case WormAction.Move:
-                        var nextDirection = _wormStrategy.NextDirection(worm);
-                        var nextLocation = worm.GetNextLocation(nextDirection);
+                        var nextDirection = _wormStrategy.NextDirection(worm, _worms);
+                        var nextLocation = Utility.GetNextLocation(nextDirection, worm.Location);
                         if (_worms.All(worm1 => worm1 == worm || !nextLocation.Equals(worm1.Location))) {
                             worm.Move(nextDirection);
                         }

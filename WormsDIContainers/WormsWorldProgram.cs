@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WormsAdvanced;
 using WormsBasic;
@@ -8,9 +7,7 @@ namespace WormsDIContainers {
     class WormsWorldProgram {
         static void Main(string[] args) {
             IHost host = CreateHostBuilder(args).Build();
-            host.Start();
-            host.StopAsync();
-            host.WaitForShutdown();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) => 

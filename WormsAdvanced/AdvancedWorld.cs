@@ -7,11 +7,11 @@ namespace WormsAdvanced {
         private readonly int _turnsNumber = 100;
         private IWormStrategy _strategy;
         private readonly NameGenerator _nameGenerator;
-        private readonly FoodContainer _foodContainer;
+        private readonly IFoodContainer _foodContainer;
         private readonly Logger _logger;
 
         public AdvancedWorld(IWormStrategy strategy, NameGenerator nameGenerator,
-            FoodContainer foodContainer, Logger logger) {
+            IFoodContainer foodContainer, Logger logger) {
             _strategy = strategy;
             _nameGenerator = nameGenerator;
             _foodContainer = foodContainer;
@@ -51,8 +51,8 @@ namespace WormsAdvanced {
                 }
                 _foodContainer.CheckForFoodAndEat(worm);
                 
-                var nextDirection = _strategy.NextDirection(worm);
-                var nextCoord = worm.GetNextLocation(nextDirection);
+                var nextDirection = _strategy.NextDirection(worm, _worms);
+                var nextCoord = Utility.GetNextLocation(nextDirection, worm.Location);
                 // if there are no worms in the next coord
                 if (_worms.All(worm1 => worm1 == worm || !nextCoord.Equals(worm1.Location))) {
                     // is there is a food in the next coord

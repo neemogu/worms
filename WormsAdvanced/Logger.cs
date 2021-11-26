@@ -12,7 +12,7 @@ namespace WormsAdvanced {
             ClearLogFile();
         }
 
-        public void PrintWorldState<TWorm> (int turn, List<TWorm> worms, FoodContainer foodContainer) where TWorm: Worm {
+        public void PrintWorldState<TWorm> (int turn, List<TWorm> worms, IFoodContainer foodContainer) where TWorm: Worm {
             var text = $"Turn {turn}:\r\nWorms:\r\n{Worm.WormsArrayToString(worms)}\r\nFood:\r\n{foodContainer.FoodToString()}\r\n";
             Console.Out.Write(text);
             try {

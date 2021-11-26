@@ -1,4 +1,6 @@
-﻿namespace WormsBasic {
+﻿using System.Collections.Generic;
+
+namespace WormsBasic {
     public class WormCircleStrategy: IWormStrategy {
         private int UpY { get; }
         private int DownY { get; }
@@ -12,7 +14,7 @@
             RightX = centerPoint.X + circleRadius;
         }
         
-        public Direction NextDirection(Worm worm) {
+        public Direction NextDirection <TWorm> (TWorm worm, List<TWorm> allWorms) where TWorm : Worm {
             var x = worm.Location.X;
             var y = worm.Location.Y;
             if (x < LeftX) {

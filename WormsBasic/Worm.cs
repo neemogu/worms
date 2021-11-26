@@ -17,32 +17,9 @@ namespace WormsBasic {
         }
 
         public void Move(Direction direction) {
-            Location = GetNextLocation(direction);
+            Location = Utility.GetNextLocation(direction, Location);
         }
 
-        public Point GetNextLocation(Direction direction) {
-            var newX = Location.X;
-            var newY = Location.Y;
-            switch (direction) {
-                case Direction.Up:
-                    ++newY;
-                    break;
-                case Direction.Down:
-                    --newY;
-                    break;
-                case Direction.Left:
-                    --newX;
-                    break;
-                case Direction.Right:
-                    ++newX;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-            }
-            
-            return new Point { X = newX, Y = newY};
-        }
-        
         public static string WormsArrayToString<T>(List<T> worms) where T: Worm {
             var builder = new StringBuilder();
             builder.Append("[\r\n");
