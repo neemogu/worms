@@ -18,7 +18,7 @@ namespace WormsAdvanced {
             _logger = logger;
         }
         
-        public AdvancedWorld(IWormStrategy strategy, FoodContainer foodContainer): this(strategy,
+        public AdvancedWorld(IWormStrategy strategy, IFoodContainer foodContainer): this(strategy,
             new NameGenerator(), foodContainer, new Logger()) {}
         
         public AdvancedWorld() : this(new IdleStrategy(), new FoodContainer(new FoodGenerator(0, 5))) {}

@@ -6,40 +6,31 @@ using WormsBasic;
 namespace WormsAdvanced {
     public class WormMultiplyingStrategy: IWormStrategy {
 
-        private readonly Random _random = new ();
-
         private readonly IFoodLocationProvider _foodLocationProvider;
         
         public WormMultiplyingStrategy(IFoodLocationProvider foodLocationProvider) {
             _foodLocationProvider = foodLocationProvider;
         }
-
-        //TODO: rework strategy
+        
         public Direction NextDirection <TWorm> (TWorm worm, List<TWorm> allWorms) where TWorm : Worm {
             var nearestFood = _foodLocationProvider.GetNearestFood(worm.Location);
             
-            var result = Direction.Up;
-            
-            if (nearestFood.X > worm.Location.X) {
-                result = NextAction(worm) != WormAction.Multiply ? Direction.Right : Direction.Left;
+            if (nearestFood.X > worm.Location.X && IsDirectionAllowed(Direction.Right, worm, allWorms)) {
+                return Direction.Right;
             }
 
-            if (nearestFood.X < worm.Location.X) {
-                result = NextAction(worm) != WormAction.Multiply ? Direction.Left : Direction.Right;
+            if (nearestFood.X < worm.Location.X && IsDirectionAllowed(Direction.Left, worm, allWorms)) {
+                return Direction.Left;
             }
 
-            if (_random.Next(2) == 0 && result != Direction.Up) {
-                return result;
-            }
-            
-            if (nearestFood.Y > worm.Location.Y) {
-                return NextAction(worm) != WormAction.Multiply ? Direction.Up : Direction.Down;
+            if (nearestFood.Y > worm.Location.Y && IsDirectionAllowed(Direction.Up, worm, allWorms)) {
+                return Direction.Up;
             }
 
-            if (nearestFood.Y < worm.Location.Y) {
-                return NextAction(worm) != WormAction.Multiply ? Direction.Down : Direction.Up;
+            if (nearestFood.Y < worm.Location.Y && IsDirectionAllowed(Direction.Down, worm, allWorms)) {
+                return Direction.Down;
             }
-            return result;
+            return Direction.Up;
         }
 
         private bool IsDirectionAllowed <TWorm> (Direction direction, TWorm worm, IEnumerable<TWorm> allWorms)

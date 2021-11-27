@@ -16,6 +16,8 @@ namespace WormsDIContainers {
                     services.AddHostedService<WorldService>()
                         .AddSingleton<IWorld, AdvancedWorld>()
                         .AddSingleton<IWormStrategy, WormMultiplyingStrategy>()
+                        .AddSingleton<IFoodLocationProvider>(sp => sp.GetService<FoodContainer>())
+                        .AddSingleton<IFoodContainer>(sp => sp.GetService<FoodContainer>())
                         .AddSingleton<FoodContainer>()
                         .AddSingleton<FoodGenerator>(new FoodGenerator(0, 5))
                         .AddSingleton<NameGenerator>()
