@@ -35,10 +35,19 @@ namespace WormsAdvanced {
 
         public void StartLife() {
             for (var i = 0; i < _turnsNumber; ++i) {
-                _foodContainer.NextTurn();
-                _logger.PrintWorldState(i + 1, _worms, _foodContainer);
-                ProcessWorms();
+                NextTurn(i + 1);
             }
+        }
+        
+        public void NextTurn(int turn) {
+            _foodContainer.NextTurn();
+            _logger.PrintWorldState(turn, _worms, _foodContainer);
+            ProcessWorms();
+        }
+
+        // for tests
+        public AdvancedWorm[] GetAllWorms() {
+            return _worms.ToArray();
         }
 
         private void ProcessWorms() {
@@ -73,6 +82,7 @@ namespace WormsAdvanced {
                         }
                         case true when _strategy.NextAction(worm) == WormAction.Move:
                             _foodContainer.CheckForFoodAndEat(worm, nextCoord);
+                            worm.Move(nextDirection);
                             break;
                     }
                 }

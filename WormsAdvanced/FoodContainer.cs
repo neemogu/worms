@@ -46,13 +46,11 @@ namespace WormsAdvanced {
             SpawnFood();
         }
         
-        public void CheckForFoodAndEat (AdvancedWorm worm) {
-            if (_food.Remove(worm.Location)) {
-                worm.Eat();
-            }
+        public void CheckForFoodAndEat(AdvancedWorm worm) {
+            CheckForFoodAndEat(worm, worm.Location);
         }
         
-        public void CheckForFoodAndEat (AdvancedWorm worm, Point coordToCheck) {
+        public void CheckForFoodAndEat(AdvancedWorm worm, Point coordToCheck) {
             if (_food.Remove(coordToCheck)) {
                 worm.Eat();
             }

@@ -4,7 +4,7 @@ using WormsBasic;
 namespace WormsAdvanced {
     public class AdvancedWorm: Worm {
         private const int StartHealth = 10;
-        private const int HealthSpendToMultiply = 1;
+        private const int HealthSpendToMultiply = 10;
         public const int HealthRequiredToMultiply = 11;
         private const int HealthRestoredWithFood = 10;
 

@@ -3,14 +3,14 @@ using WormsBasic;
 
 namespace WormsAdvanced {
     public interface IFoodContainer {
-        public bool HasFoodIn(Point point);
+        bool HasFoodIn(Point point);
 
-        public string FoodToString();
+        string FoodToString();
 
-        public void NextTurn();
+        void NextTurn();
 
-        public void CheckForFoodAndEat (AdvancedWorm worm);
+        void CheckForFoodAndEat(AdvancedWorm worm);
 
-        public void CheckForFoodAndEat (AdvancedWorm worm, Point coordToCheck);
+        void CheckForFoodAndEat(AdvancedWorm worm, Point coordToCheck);
     }
 }
