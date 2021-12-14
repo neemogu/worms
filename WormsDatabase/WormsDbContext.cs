@@ -4,7 +4,11 @@ using WormsBasic;
 namespace WormsDatabase {
     public class WormsDbContext : DbContext {
         public DbSet<WorldState> WorldStates { get; set; }
-        
+
+        public WormsDbContext() {}
+
+        public WormsDbContext(DbContextOptions<WormsDbContext> options) : base(options) {}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
                 optionsBuilder.UseNpgsql(

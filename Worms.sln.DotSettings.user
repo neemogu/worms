@@ -3,12 +3,7 @@
   &lt;Assembly Path="C:\Users\nik18\.nuget\packages\microsoft.extensions.hosting.abstractions\5.0.0\lib\netstandard2.1\Microsoft.Extensions.Hosting.Abstractions.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=84eab71e_002Df89b_002D45fc_002Db8c2_002D2dec31319221/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WormStrategyTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormStrategyTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.FoodGeneratorTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormInteractionTests.MoveToEmptyLocation&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormInteractionTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Project Location="D:\RiderProjects\Worms\WormsTests" Presentation="&amp;lt;WormsTests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	

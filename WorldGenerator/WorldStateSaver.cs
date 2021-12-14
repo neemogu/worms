@@ -23,23 +23,23 @@ namespace WorldGenerator {
             return generatedFood.Keys.ToList();
         }
 
-        public void CreateNewWorldState(string name) {
+        public List<Point> CreateNewWorldState(string name, WormsDbContext dbContext) {
             var generatedFood = GenerateFoodLocations();
-            using (var dbContext = new WormsDbContext()) {
-                var existingState = dbContext.WorldStates.FirstOrDefault(ws => ws.Name.Equals(name));
-                if (existingState != null) {
-                    existingState.GeneratedFood = generatedFood;
-                    dbContext.WorldStates.Update(existingState);
-                } else {
-                    var newWorldState = new WorldState {
-                        Name = name,
-                        GeneratedFood = generatedFood
-                    };
-                    dbContext.WorldStates.Add(newWorldState);
-                }
-
-                dbContext.SaveChanges();
+            var existingState = dbContext.WorldStates.FirstOrDefault(ws => ws.Name.Equals(name));
+            if (existingState != null) {
+                existingState.GeneratedFood = generatedFood;
+                dbContext.WorldStates.Update(existingState);
+            } else {
+                var newWorldState = new WorldState {
+                    Name = name,
+                    GeneratedFood = generatedFood
+                };
+                dbContext.WorldStates.Add(newWorldState);
             }
+
+            dbContext.SaveChanges();
+
+            return generatedFood;
         }
     }
 }

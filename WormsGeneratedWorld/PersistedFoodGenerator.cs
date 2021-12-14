@@ -9,17 +9,15 @@ namespace WormsGeneratedWorld {
         private readonly Point[] _locations;
         private int _locationIterator;
 
-        public PersistedFoodGenerator(string worldName) {
-            _locations = LoadWorldState(worldName);
+        public PersistedFoodGenerator(string worldName, WormsDbContext dbContext) {
+            _locations = LoadWorldState(worldName, dbContext);
             _locationIterator = 0;
         }
 
-        private static Point[] LoadWorldState(string worldName) {
-            using (var dbContext = new WormsDbContext()) {
-                return dbContext.WorldStates.FirstOrDefault(ws => ws.Name.Equals(worldName))
-                    ?.GeneratedFood
-                    .ToArray();
-            }
+        private static Point[] LoadWorldState(string worldName, WormsDbContext dbContext) {
+            return dbContext.WorldStates.FirstOrDefault(ws => ws.Name.Equals(worldName))
+                ?.GeneratedFood
+                .ToArray();
         }
 
 

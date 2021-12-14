@@ -1,4 +1,5 @@
 ﻿using System;
+using WormsDatabase;
 
 namespace WorldGenerator {
     class WorldStateGenerator {
@@ -9,7 +10,9 @@ namespace WorldGenerator {
             }
             var name = args[0];
             var saver = new WorldStateSaver(100);
-            saver.CreateNewWorldState(name);
+            using (var dbContext = new WormsDbContext()) {
+                saver.CreateNewWorldState(name, dbContext);
+            }
             Console.WriteLine($@"World with name {name} has been saved");
         }
     }
