@@ -8,7 +8,7 @@ namespace WormsDatabase {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
                 optionsBuilder.UseNpgsql(
-                    "Host=localhost:5432;Database=worms;Username=user;Password=180101"
+                    "Host=localhost;Database=worms;Username=postgres;Password=1234"
                     );
             }
         }
