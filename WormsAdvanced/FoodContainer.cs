@@ -5,9 +5,9 @@ using WormsBasic;
 namespace WormsAdvanced {
     public class FoodContainer : IFoodLocationProvider, IFoodContainer {
 
-        private readonly FoodGenerator _foodGenerator;
+        private readonly IFoodGenerator _foodGenerator;
         
-        public FoodContainer(FoodGenerator generator) {
+        public FoodContainer(IFoodGenerator generator) {
             _foodGenerator = generator;
         }
         

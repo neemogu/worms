@@ -19,10 +19,9 @@ namespace WormsDIContainers {
                         .AddSingleton<IFoodLocationProvider>(sp => sp.GetService<FoodContainer>())
                         .AddSingleton<IFoodContainer>(sp => sp.GetService<FoodContainer>())
                         .AddSingleton<FoodContainer>()
-                        .AddSingleton<FoodGenerator>(new FoodGenerator(0, 5))
+                        .AddSingleton<IFoodGenerator>(new RandomFoodGenerator(0, 5))
                         .AddSingleton<NameGenerator>()
                         .AddSingleton<Logger>();
-
                 });
     }
 }

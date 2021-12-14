@@ -21,7 +21,7 @@ namespace WormsAdvanced {
         public AdvancedWorld(IWormStrategy strategy, IFoodContainer foodContainer): this(strategy,
             new NameGenerator(), foodContainer, new Logger()) {}
         
-        public AdvancedWorld() : this(new IdleStrategy(), new FoodContainer(new FoodGenerator(0, 5))) {}
+        public AdvancedWorld() : this(new IdleStrategy(), new FoodContainer(new RandomFoodGenerator(0, 5))) {}
         
         private readonly List<AdvancedWorm> _worms = new();
         private readonly ISet<string> _wormsNames = new HashSet<string>();

@@ -4,7 +4,7 @@ namespace WormsAdvanced {
     internal static class WormsWorldProgram
     {
         private static void Main(string[] args) {
-            FoodContainer foodContainer = new FoodContainer(new FoodGenerator(0, 5));
+            FoodContainer foodContainer = new FoodContainer(new RandomFoodGenerator(0, 5));
             IWormStrategy strategy = new WormMultiplyingStrategy(foodContainer);
             var world = new AdvancedWorld(strategy, foodContainer);
 

@@ -8,7 +8,7 @@ namespace WormsTests {
         [Test]
         public void FoodLocationUniquenessTest() {
             const int foodCountToGenerate = 50;
-            var generator = new FoodGenerator(0, 5);
+            var generator = new RandomFoodGenerator(0, 5);
             var allFood = new Dictionary<Point, Food>();
             for (var i = 0; i < 10; ++i) {
                 for (var j = 0; j < foodCountToGenerate; ++j) {
