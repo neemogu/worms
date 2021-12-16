@@ -28,6 +28,10 @@ namespace WormsStrategyServer {
             var sortedFood = GetSortedFood(worm.Location);
 
             foreach (var foodLocation in sortedFood) {
+                _food.TryGetValue(foodLocation, out var foundFood);
+                if (!IsMakeSenseToMove(worm, allWorms, foodLocation, foundFood)) {
+                    continue;
+                }
                 if (new Random().Next(0, 2) == 0) {
                     if (foodLocation.X > worm.Location.X && IsDirectionAllowedToMove(Direction.Right, worm, allWorms)) {
                         return Direction.Right;
@@ -63,6 +67,11 @@ namespace WormsStrategyServer {
                 }
             }
             return (Direction) new Random().Next(0, 4);
+        }
+
+        private bool IsMakeSenseToMove(AdvancedWorm worm, List<AdvancedWorm> allWorms, Point foodLocation, Food food) {
+            return foodLocation.DistanceTo(worm.Location) < Food.MaxRecency - food.Recency
+                && allWorms.All(w => w == worm || worm.Location.DistanceTo(foodLocation) <= w.Location.DistanceTo(foodLocation));
         }
 
         private Direction NextMultiplyDirection(AdvancedWorm worm, List<AdvancedWorm> allWorms) {
