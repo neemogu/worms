@@ -10,30 +10,30 @@ namespace WormsAdvanced {
         public FoodContainer(IFoodGenerator generator) {
             _foodGenerator = generator;
         }
-        
-        private readonly IDictionary<Point, Food> _food = new Dictionary<Point, Food>();
+
+        public IDictionary<Point, Food> Food { get; } = new Dictionary<Point, Food>();
 
         private void ClearRottenFood() {
             var rottenFoodLocations = new List<Point>();
-            foreach (var (location, food) in _food) {
+            foreach (var (location, food) in Food) {
                 food.Stale();
                 if (food.IsRotten()) {
                     rottenFoodLocations.Add(location);
                 }
             }
             foreach (var location in rottenFoodLocations) {
-                _food.Remove(location);
+                Food.Remove(location);
             }
         }
 
         public bool HasFoodIn(Point point) {
-            return _food.ContainsKey(point);
+            return Food.ContainsKey(point);
         }
         
         public string FoodToString() {
             var builder = new StringBuilder();
             builder.Append("[\r\n");
-            foreach (var (location, food) in _food) {
+            foreach (var (location, food) in Food) {
                 builder.Append("\t" + location + ",\r\n");
             }
             builder.Remove(builder.Length - 3, 1);
@@ -51,19 +51,19 @@ namespace WormsAdvanced {
         }
         
         public void CheckForFoodAndEat(AdvancedWorm worm, Point coordToCheck) {
-            if (_food.Remove(coordToCheck)) {
+            if (Food.Remove(coordToCheck)) {
                 worm.Eat();
             }
         }
         
         private void SpawnFood() {
-            _foodGenerator.SpawnFood(_food);
+            _foodGenerator.SpawnFood(Food);
         }
         
         public Point GetNearestFood(Point fromCoord) {
             var nearest = new Point { X = int.MaxValue, Y = int.MaxValue};  
             var lowestDistance = int.MaxValue;
-            foreach (var (foodLocation, food) in _food) {
+            foreach (var (foodLocation, food) in Food) {
                 var distance = fromCoord.DistanceTo(foodLocation);
                 if (distance >= lowestDistance) continue;
                 lowestDistance = distance;

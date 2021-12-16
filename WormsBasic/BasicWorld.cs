@@ -7,9 +7,9 @@ namespace WormsBasic {
     public class BasicWorld: IWorld {
         private readonly int _turnsNumber;
         private const string LogFileName = "WorldHistory.txt";
-        private readonly IWormStrategy _wormStrategy;
+        private readonly IWormStrategy<Worm> _wormStrategy;
         
-        public BasicWorld(int turnsNumber, IWormStrategy wormStrategy) {
+        public BasicWorld(int turnsNumber, IWormStrategy<Worm> wormStrategy) {
             ClearLogFile();
             _turnsNumber = turnsNumber;
             _wormStrategy = wormStrategy;
@@ -22,15 +22,16 @@ namespace WormsBasic {
         public void StartLife() {
             for (var i = 0; i < _turnsNumber; ++i) {
                 PrintWorms(i + 1);
-                ProcessWorms();
+                ProcessWorms(i + 1);
             }
         }
 
-        private void ProcessWorms() {
+        private void ProcessWorms(int step) {
             foreach (var worm in _worms) {
-                switch (_wormStrategy.NextAction(worm)) {
-                    case WormAction.Move:
-                        var nextDirection = _wormStrategy.NextDirection(worm, _worms);
+                WormAction nextAction = _wormStrategy.NextAction(worm, _worms, step, 1);
+                switch (nextAction.Action) {
+                    case Action.Move:
+                        var nextDirection = nextAction.Direction;
                         var nextLocation = Utility.GetNextLocation(nextDirection, worm.Location);
                         if (_worms.All(worm1 => worm1 == worm || !nextLocation.Equals(worm1.Location))) {
                             worm.Move(nextDirection);

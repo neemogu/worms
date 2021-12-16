@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldGenerator", "WorldGene
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsGeneratedWorld", "WormsGeneratedWorld\WormsGeneratedWorld.csproj", "{84F60C78-4134-4411-A5EC-BB0C061E489B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsStrategyServer", "WormsStrategyServer\WormsStrategyServer.csproj", "{92C9C787-09A1-41D7-B976-A8E60FD7B9FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormStrategyAPI", "WormStrategyAPI\WormStrategyAPI.csproj", "{66574976-B9AD-48CB-91FC-70DFA143D825}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsStrategyClient", "WormsStrategyClient\WormsStrategyClient.csproj", "{F38AE9EB-EE1E-41CB-A3D3-FB831D34E582}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,5 +53,17 @@ Global
 		{84F60C78-4134-4411-A5EC-BB0C061E489B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84F60C78-4134-4411-A5EC-BB0C061E489B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84F60C78-4134-4411-A5EC-BB0C061E489B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C9C787-09A1-41D7-B976-A8E60FD7B9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C9C787-09A1-41D7-B976-A8E60FD7B9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C9C787-09A1-41D7-B976-A8E60FD7B9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C9C787-09A1-41D7-B976-A8E60FD7B9FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66574976-B9AD-48CB-91FC-70DFA143D825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66574976-B9AD-48CB-91FC-70DFA143D825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66574976-B9AD-48CB-91FC-70DFA143D825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66574976-B9AD-48CB-91FC-70DFA143D825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F38AE9EB-EE1E-41CB-A3D3-FB831D34E582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F38AE9EB-EE1E-41CB-A3D3-FB831D34E582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F38AE9EB-EE1E-41CB-A3D3-FB831D34E582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F38AE9EB-EE1E-41CB-A3D3-FB831D34E582}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

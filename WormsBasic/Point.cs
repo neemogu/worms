@@ -1,9 +1,9 @@
 ﻿using System;
 
 namespace WormsBasic {
-    public readonly struct Point {
-        public int X { get; init; }
-        public int Y { get; init; }
+    public struct Point {
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public override string ToString() {
             return $"({X}, {Y})";

@@ -14,7 +14,7 @@ namespace WormsGeneratedWorld {
             using (var dbContext = new WormsDbContext()) {
                 var foodContainer = new FoodContainer(new PersistedFoodGenerator(args[0], dbContext));
                 
-                IWormStrategy strategy = new WormMultiplyingStrategy(foodContainer);
+                IWormStrategy<AdvancedWorm> strategy = new WormMultiplyingStrategy(foodContainer);
                 var world = new AdvancedWorld(strategy, foodContainer);
 
                 Worm john = new AdvancedWorm("John", new Point { X = 0, Y = 0 });

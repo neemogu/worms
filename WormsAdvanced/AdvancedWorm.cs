@@ -8,8 +8,10 @@ namespace WormsAdvanced {
         public const int HealthRequiredToMultiply = 11;
         private const int HealthRestoredWithFood = 10;
 
-        public AdvancedWorm(string name, Point startPoint) : base(name, startPoint) {
-            Health = StartHealth;
+        public AdvancedWorm(string name, Point startPoint) : this(name, startPoint, StartHealth) {}
+        
+        public AdvancedWorm(string name, Point startPoint, int health) : base(name, startPoint) {
+            Health = health > 0 ? health : StartHealth;
         }
 
         public int Health { get; private set; }

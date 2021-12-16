@@ -15,7 +15,7 @@ namespace WormsDIContainers {
                 .ConfigureServices((_, services) => {
                     services.AddHostedService<WorldService>()
                         .AddSingleton<IWorld, AdvancedWorld>()
-                        .AddSingleton<IWormStrategy, WormMultiplyingStrategy>()
+                        .AddSingleton<IWormStrategy<AdvancedWorm>, WormMultiplyingStrategy>()
                         .AddSingleton<IFoodLocationProvider>(sp => sp.GetService<FoodContainer>())
                         .AddSingleton<IFoodContainer>(sp => sp.GetService<FoodContainer>())
                         .AddSingleton<FoodContainer>()

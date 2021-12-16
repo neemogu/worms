@@ -1,5 +1,6 @@
 ﻿namespace WormsBasic {
-    public enum WormAction {
-        Move, Idle, Multiply
+    public struct WormAction {
+        public Direction Direction { get; set; }
+        public Action Action { get; set; }
     }
 }

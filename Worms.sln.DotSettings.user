@@ -2,8 +2,44 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\nik18\.nuget\packages\microsoft.extensions.hosting.abstractions\5.0.0\lib\netstandard2.1\Microsoft.Extensions.Hosting.Abstractions.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=84eab71e_002Df89b_002D45fc_002Db8c2_002D2dec31319221/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WormStrategyTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0a62d0a6_002D8190_002D43c6_002D804f_002D9216d836f828/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MultiplyFreeLocation #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormInteractionTests.MultiplyFreeLocation&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=145e0bb0_002Da1da_002D4cec_002D9cb2_002D5042baa71d3c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MultiplyFreeLocation" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormInteractionTests.MultiplyFreeLocation&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=18c9ae23_002D4fa3_002D4bbe_002D8cf9_002D4f447215f20f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="MultiplyFreeLocation #7" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="D:\RiderProjects\Worms\WormsTests" Presentation="&amp;lt;WormsTests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=25e0de8d_002D07f2_002D411a_002D983d_002Dc6ca3931ba4c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MultiplyFreeLocation #6" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormInteractionTests.MultiplyFreeLocation&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3b89a625_002D64e4_002D4fe9_002D9781_002Dca46515da986/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MoveToEmptyLocation" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\RiderProjects\Worms\WormsTests" Presentation="&amp;lt;WormsTests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=669ece9b_002Dc662_002D470f_002D8b41_002D456e5dd0eccf/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MultiplyFreeLocation #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormInteractionTests.MultiplyFreeLocation&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=84eab71e_002Df89b_002D45fc_002Db8c2_002D2dec31319221/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="WormStrategyTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\RiderProjects\Worms\WormsTests" Presentation="&amp;lt;WormsTests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a58a9dee_002De6a3_002D450f_002D84fe_002D0e5feb6ca017/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MultiplyFreeLocation #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormInteractionTests.MultiplyFreeLocation&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e203bf99_002D3635_002D48fe_002Db170_002Dce02d7dd9e54/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MultiplyFreeLocation #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::0C74F756-AF33-4372-9FC6-CE9D650D4EA2::net5.0::WormsTests.WormInteractionTests.MultiplyFreeLocation&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	

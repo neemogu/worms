@@ -5,7 +5,7 @@ namespace WormsAdvanced {
     {
         private static void Main(string[] args) {
             FoodContainer foodContainer = new FoodContainer(new RandomFoodGenerator(0, 5));
-            IWormStrategy strategy = new WormMultiplyingStrategy(foodContainer);
+            IWormStrategy<AdvancedWorm> strategy = new WormMultiplyingStrategy(foodContainer);
             var world = new AdvancedWorld(strategy, foodContainer);
 
             Worm john = new AdvancedWorm("John", new Point {X = 0, Y = 0});

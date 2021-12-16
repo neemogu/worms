@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace WormsBasic {
-    public class WormCircleStrategy: IWormStrategy {
+    public class WormCircleStrategy: IWormStrategy<Worm> {
         private int UpY { get; }
         private int DownY { get; }
         private int LeftX { get; }
@@ -13,8 +13,12 @@ namespace WormsBasic {
             LeftX = centerPoint.X - circleRadius;
             RightX = centerPoint.X + circleRadius;
         }
+
+        public WormAction NextAction(Worm worm, List<Worm> allWorms, int step, int run) {
+            return new WormAction { Action = Action.Move, Direction = NextDirection(worm) };
+        }
         
-        public Direction NextDirection <TWorm> (TWorm worm, List<TWorm> allWorms) where TWorm : Worm {
+        private Direction NextDirection (Worm worm) {
             var x = worm.Location.X;
             var y = worm.Location.Y;
             if (x < LeftX) {
@@ -55,10 +59,6 @@ namespace WormsBasic {
                 return Direction.Left;
             }
             return Direction.Left;
-        }
-
-        public WormAction NextAction(Worm worm) {
-            return WormAction.Move;
         }
     }
 }

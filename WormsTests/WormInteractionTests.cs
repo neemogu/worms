@@ -4,11 +4,12 @@ using Moq;
 using NUnit.Framework;
 using WormsAdvanced;
 using WormsBasic;
+using Action = WormsBasic.Action;
 
 namespace WormsTests {
     public class WormInteractionTests {
         private Mock<IFoodContainer> _foodContainerMock;
-        private Mock<IWormStrategy> _strategyMock;
+        private Mock<IWormStrategy<AdvancedWorm>> _strategyMock;
         private NameGenerator _nameGenerator;
         private Mock<Logger> _loggerMock;
         private AdvancedWorld _world;
@@ -17,7 +18,7 @@ namespace WormsTests {
         [SetUp]
         public void Init() {
             _foodContainerMock = new Mock<IFoodContainer>();
-            _strategyMock = new Mock<IWormStrategy>();
+            _strategyMock = new Mock<IWormStrategy<AdvancedWorm>>(MockBehavior.Strict);
             _nameGenerator = new NameGenerator();
             _loggerMock = new Mock<Logger>();
             _world = new AdvancedWorld(_strategyMock.Object, _nameGenerator, _foodContainerMock.Object,
@@ -28,9 +29,9 @@ namespace WormsTests {
 
         [Test]
         public void MoveToEmptyLocation() {
-            _strategyMock.Setup(strategy => strategy.NextDirection(It.IsAny<Worm>(), It.IsAny<List<Worm>>()))
-                .Returns(Direction.Up);
-            _strategyMock.Setup(strategy => strategy.NextAction(It.IsAny<Worm>())).Returns(WormAction.Move);
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                It.IsAny<AdvancedWorm>(), It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+                )).Returns(new WormAction { Direction = Direction.Up, Action = Action.Move });
             _foodContainerMock.Setup(container => container.HasFoodIn(
                 It.Is<Point>(point => point.X == _worm.Location.X && point.Y == _worm.Location.Y + 1)
                 )).Returns(false);
@@ -44,9 +45,9 @@ namespace WormsTests {
         
         [Test]
         public void FoodAtWormLocation() {
-            _strategyMock.Setup(strategy => strategy.NextDirection(It.IsAny<Worm>(), It.IsAny<List<Worm>>()))
-                .Returns(Direction.Up);
-            _strategyMock.Setup(strategy => strategy.NextAction(It.IsAny<Worm>())).Returns(WormAction.Move);
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                It.IsAny<AdvancedWorm>(), It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+            )).Returns(new WormAction {Direction = Direction.Up, Action = Action.Move});
             _foodContainerMock.Setup(container => container.HasFoodIn(
                 It.Is<Point>(point => point.X == _worm.Location.X && point.Y == _worm.Location.Y + 1)
                 )).Returns(false);
@@ -58,9 +59,9 @@ namespace WormsTests {
         
         [Test]
         public void MoveToLocationWithFood() {
-            _strategyMock.Setup(strategy => strategy.NextDirection(It.IsAny<Worm>(), It.IsAny<List<Worm>>()))
-                .Returns(Direction.Up);
-            _strategyMock.Setup(strategy => strategy.NextAction(It.IsAny<Worm>())).Returns(WormAction.Move);
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                It.IsAny<AdvancedWorm>(), It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+            )).Returns(new WormAction {Direction = Direction.Up, Action = Action.Move});
             _foodContainerMock.Setup(container => container.HasFoodIn(
                 It.Is<Point>(point => point.X == _worm.Location.X && point.Y == _worm.Location.Y + 1)
                 )).Returns(true);
@@ -78,9 +79,9 @@ namespace WormsTests {
         
         [Test]
         public void MoveToLocationWithFoodFromLocationWithFood() {
-            _strategyMock.Setup(strategy => strategy.NextDirection(It.IsAny<Worm>(), It.IsAny<List<Worm>>()))
-                .Returns(Direction.Up);
-            _strategyMock.Setup(strategy => strategy.NextAction(It.IsAny<Worm>())).Returns(WormAction.Move);
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                It.IsAny<AdvancedWorm>(), It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+            )).Returns(new WormAction {Direction = Direction.Up, Action = Action.Move});
             _foodContainerMock.Setup(container => container.HasFoodIn(
                 It.Is<Point>(point => point.X == _worm.Location.X && point.Y == _worm.Location.Y + 1)
             )).Returns(true);
@@ -102,10 +103,12 @@ namespace WormsTests {
         public void MoveToLocationWithAnotherWorm() {
             var bob = new AdvancedWorm("Bob", new Point { X = 0, Y = 1 });
             _world.AddWorm(bob);
-            _strategyMock.Setup(strategy => strategy.NextDirection(It.IsAny<Worm>(), It.IsAny<List<Worm>>()))
-                .Returns(Direction.Up);
-            _strategyMock.Setup(strategy => strategy.NextAction(It.IsAny<Worm>())).Returns(WormAction.Move);
-            _strategyMock.Setup(strategy => strategy.NextAction(bob)).Returns(WormAction.Idle);
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                It.IsAny<AdvancedWorm>(), It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+            )).Returns(new WormAction {Direction = Direction.Up, Action = Action.Move});
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                bob, It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+                )).Returns(new WormAction {Direction = Direction.Up, Action = Action.Idle});
             var startLocation = _worm.Location;
             _world.NextTurn(1);
             Assert.AreEqual(startLocation.X, _worm.Location.X);
@@ -117,10 +120,12 @@ namespace WormsTests {
             var bob = new AdvancedWorm("Bob", new Point { X = 0, Y = 1 });
             _world.AddWorm(bob);
             
-            _strategyMock.Setup(strategy => strategy.NextDirection(_worm, It.IsAny<List<Worm>>()))
-                .Returns(Direction.Up);
-            _strategyMock.Setup(strategy => strategy.NextAction(_worm)).Returns(WormAction.Multiply);
-            _strategyMock.Setup(strategy => strategy.NextAction(bob)).Returns(WormAction.Idle);
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                It.IsAny<AdvancedWorm>(), It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+            )).Returns(new WormAction {Direction = Direction.Up, Action = Action.Multiply});
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                bob, It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+            )).Returns(new WormAction {Direction = Direction.Up, Action = Action.Idle});
             var startHealth = _worm.Health;
             _world.NextTurn(1);
             Assert.AreEqual(startHealth - 1, _worm.Health);
@@ -129,9 +134,9 @@ namespace WormsTests {
         
         [Test]
         public void MultiplyToLocationWithFood() {
-            _strategyMock.Setup(strategy => strategy.NextDirection(It.IsAny<Worm>(), It.IsAny<List<Worm>>()))
-                .Returns(Direction.Up);
-            _strategyMock.Setup(strategy => strategy.NextAction(It.IsAny<Worm>())).Returns(WormAction.Multiply);
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                It.IsAny<AdvancedWorm>(), It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+            )).Returns(new WormAction {Direction = Direction.Up, Action = Action.Multiply});
             _foodContainerMock.Setup(container => container.HasFoodIn(
                 It.Is<Point>(point => point.X == _worm.Location.X && point.Y == _worm.Location.Y + 1)
             )).Returns(true);
@@ -143,9 +148,9 @@ namespace WormsTests {
         
         [Test]
         public void MultiplyFreeLocation() {
-            _strategyMock.Setup(strategy => strategy.NextDirection(It.IsAny<Worm>(), It.IsAny<List<Worm>>()))
-                .Returns(Direction.Up);
-            _strategyMock.Setup(strategy => strategy.NextAction(It.IsAny<Worm>())).Returns(WormAction.Multiply);
+            _strategyMock.Setup(strategy => strategy.NextAction(
+                It.IsAny<AdvancedWorm>(), It.IsAny<List<AdvancedWorm>>(), It.IsAny<int>(), It.IsAny<int>()
+            )).Returns(new WormAction { Direction = Direction.Up, Action = Action.Multiply });
             _foodContainerMock.Setup(container => container.HasFoodIn(
                 It.Is<Point>(point => point.X == _worm.Location.X && point.Y == _worm.Location.Y + 1)
             )).Returns(false);
