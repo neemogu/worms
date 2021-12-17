@@ -81,7 +81,9 @@ namespace WormsStrategyServer {
                 var wormDistance = worm.Location.DistanceTo(foodLocation);
                 var feWormDistance = feWorm.Location.DistanceTo(foodLocation);
                 if (feWormDistance < wormDistance) {
-                    return true;
+                    if (getNearestFoodDistance(feWorm.Location) >= feWormDistance) {
+                        return true;
+                    }
                 }
 
                 if (feWormDistance > wormDistance) {
