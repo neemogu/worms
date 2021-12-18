@@ -15,21 +15,21 @@ namespace WormsStrategyServer {
         public WormAction NextAction (AdvancedWorm worm, List<AdvancedWorm> allWorms, int step, int run) {
             var action = NextAction(worm, step);
             if (action == Action.Move) {
-                return new WormAction { Direction = NextMoveDirection(worm, allWorms), Action = action };
+                return new WormAction { Direction = NextMoveDirection(worm, allWorms, step), Action = action };
             }
             try {
                 return new WormAction { Direction = NextMultiplyDirection(worm, allWorms), Action = action };
             } catch (Exception) {
-                return new WormAction { Direction = NextMoveDirection(worm, allWorms), Action = action };
+                return new WormAction { Direction = NextMoveDirection(worm, allWorms, step), Action = action };
             }
         }
         
-        private Direction NextMoveDirection (AdvancedWorm worm, List<AdvancedWorm> allWorms) {
+        private Direction NextMoveDirection (AdvancedWorm worm, List<AdvancedWorm> allWorms, int step) {
             var sortedFood = GetSortedFood(worm.Location);
 
             foreach (var foodLocation in sortedFood) {
                 _food.TryGetValue(foodLocation, out var foundFood);
-                if (!IsMakeSenseToMove(worm, allWorms, foodLocation, foundFood)) {
+                if (!IsMakeSenseToMove(worm, allWorms, foodLocation, foundFood, step)) {
                     continue;
                 }
                 
@@ -90,12 +90,12 @@ namespace WormsStrategyServer {
             return (Direction)new Random().Next(0, 4);
         }
 
-        private bool IsMakeSenseToMove(AdvancedWorm worm, List<AdvancedWorm> allWorms, Point foodLocation, Food food) {
+        private bool IsMakeSenseToMove(AdvancedWorm worm, List<AdvancedWorm> allWorms, Point foodLocation, Food food, int step) {
             return foodLocation.DistanceTo(worm.Location) <= Food.MaxRecency - food.Recency
-                   && !IsLockedByOtherWorms(worm, allWorms, foodLocation);
+                   && !IsLockedByOtherWorms(worm, allWorms, foodLocation, step);
         }
 
-        private bool IsLockedByOtherWorms(AdvancedWorm worm, List<AdvancedWorm> allWorms, Point foodLocation) {
+        private bool IsLockedByOtherWorms(AdvancedWorm worm, List<AdvancedWorm> allWorms, Point foodLocation, int step) {
             var thisWormLockedFood = false;
             foreach (var feWorm in allWorms) {
                 var wormDistance = worm.Location.DistanceTo(foodLocation);
@@ -115,14 +115,18 @@ namespace WormsStrategyServer {
                         thisWormLockedFood = true;
                         continue;
                     }
-
+                    
                     // feWorm != worm
-                    if (GetNearestFoodDistance(feWorm.Location) < feWormDistance) {
+                    
+                    // feWorm doesn't want to compete or this food
+                    if (GetNearestFoodDistance(feWorm.Location) < feWormDistance || 
+                        NextAction(feWorm, step) == Action.Multiply ||
+                        feWorm.Health > worm.Health) {
                         continue;
                     }
 
                     // getNearestFoodDistance(feWorm.Location) == feWormDistance
-                    if (!thisWormLockedFood) {
+                    if (feWorm.Health < worm.Health || !thisWormLockedFood) {
                         return true;
                     }
                 }
@@ -166,7 +170,7 @@ namespace WormsStrategyServer {
 
         private static Action NextAction (AdvancedWorm worm, int step) {
             var stepsLeft = 100 - step;
-            if (stepsLeft <= worm.Health / AdvancedWorm.HealthRequiredToMultiply) {
+            if (stepsLeft <= (worm.Health - 1) / AdvancedWorm.HealthRequiredToMultiply) {
                 return Action.Multiply;
             }
             return worm.Health >= AdvancedWorm.HealthRequiredToMultiply * 5 / 2 ? Action.Multiply : Action.Move;
