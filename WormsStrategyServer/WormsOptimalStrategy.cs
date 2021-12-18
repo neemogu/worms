@@ -117,10 +117,19 @@ namespace WormsStrategyServer {
                     }
                     
                     // feWorm != worm
-                    
+
                     // feWorm doesn't want to compete or this food
-                    if (GetNearestFoodDistance(feWorm.Location) < feWormDistance || 
-                        NextAction(feWorm, step) == Action.Multiply ||
+                    if (GetNearestFoodDistance(feWorm.Location) < feWormDistance 
+                        || 
+                        NextAction(feWorm, step) == Action.Multiply 
+                        || 
+                        NextAction(feWorm, step) == Action.Move &&
+                            (feWorm.Location.X != foodLocation.X &&
+                             !IsDirectionAllowedToMove(feWorm.Location.X > foodLocation.X ? Direction.Left : Direction.Right, feWorm, allWorms) 
+                             ||
+                             feWorm.Location.Y != foodLocation.Y &&
+                             !IsDirectionAllowedToMove(feWorm.Location.Y > foodLocation.Y ? Direction.Down : Direction.Up, feWorm, allWorms)) 
+                        ||
                         feWorm.Health > worm.Health) {
                         continue;
                     }
@@ -133,6 +142,8 @@ namespace WormsStrategyServer {
             }
             return false;
         }
+        
+        
 
         private int GetNearestFoodDistance(Point fromLocation) {
             var sortedFood = GetSortedFood(fromLocation);
