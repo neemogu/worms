@@ -67,11 +67,31 @@ namespace WormsStrategyServer {
                     }
                 }
             }
-            return (Direction) new Random().Next(0, 4);
+            return DirectionToCenter(worm);
+        }
+
+        private static Direction DirectionToCenter(AdvancedWorm worm) {
+            if (worm.Location.X < 0) {
+                return Direction.Right;
+            }
+
+            if (worm.Location.X > 0) {
+                return Direction.Left;
+            }
+            
+            if (worm.Location.Y < 0) {
+                return Direction.Up;
+            }
+
+            if (worm.Location.Y > 0) {
+                return Direction.Down;
+            }
+
+            return (Direction)new Random().Next(0, 4);
         }
 
         private bool IsMakeSenseToMove(AdvancedWorm worm, List<AdvancedWorm> allWorms, Point foodLocation, Food food) {
-            return foodLocation.DistanceTo(worm.Location) < Food.MaxRecency - food.Recency
+            return foodLocation.DistanceTo(worm.Location) <= Food.MaxRecency - food.Recency
                    && !IsLockedByOtherWorms(worm, allWorms, foodLocation);
         }
 
@@ -81,7 +101,7 @@ namespace WormsStrategyServer {
                 var wormDistance = worm.Location.DistanceTo(foodLocation);
                 var feWormDistance = feWorm.Location.DistanceTo(foodLocation);
                 if (feWormDistance < wormDistance) {
-                    if (getNearestFoodDistance(feWorm.Location) >= feWormDistance) {
+                    if (GetNearestFoodDistance(feWorm.Location) >= feWormDistance) {
                         return true;
                     }
                 }
@@ -97,7 +117,7 @@ namespace WormsStrategyServer {
                     }
 
                     // feWorm != worm
-                    if (getNearestFoodDistance(feWorm.Location) < feWormDistance) {
+                    if (GetNearestFoodDistance(feWorm.Location) < feWormDistance) {
                         continue;
                     }
 
@@ -110,7 +130,7 @@ namespace WormsStrategyServer {
             return false;
         }
 
-        private int getNearestFoodDistance(Point fromLocation) {
+        private int GetNearestFoodDistance(Point fromLocation) {
             var sortedFood = GetSortedFood(fromLocation);
             if (sortedFood.Count > 0) {
                 return sortedFood[0].DistanceTo(fromLocation);
@@ -149,7 +169,7 @@ namespace WormsStrategyServer {
             if (stepsLeft <= worm.Health / AdvancedWorm.HealthRequiredToMultiply) {
                 return Action.Multiply;
             }
-            return worm.Health > AdvancedWorm.HealthRequiredToMultiply * 2 ? Action.Multiply : Action.Move;
+            return worm.Health >= AdvancedWorm.HealthRequiredToMultiply * 5 / 2 ? Action.Multiply : Action.Move;
         }
         
         private List<Point> GetSortedFood(Point fromPoint) {
